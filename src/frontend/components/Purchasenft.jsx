@@ -1,26 +1,19 @@
-import { ethers } from 'ethers';
-import React, { useContext, useEffect,useState } from 'react'
+import React, { useEffect } from 'react';
 import { nftcontext } from '../context/nftcontext';
+import { useContext } from 'react';
+import { ethers } from 'ethers';
 import { Loader } from './Loader';
-import { Component } from './New';
 import { Link } from 'react-router-dom';
 
- export const Allnft = () => {
-  const {nft,purchase_nft,isConnected, AllnftLoader,purchasebutton}= useContext(nftcontext)   
-    
-    useEffect(() => {
-        console.log(nft.current) 
-        console.log(AllnftLoader)  
-            
-    },[AllnftLoader])
-    
-
-     
-
-    
+ export  const Purchasenft = () => {
+  const {purchasenft,PurnftLoader} = useContext(nftcontext);
+  useEffect(()=> {
+          console.log(purchasenft.current)
+  },[])
+  
   return (
-  <div>
-    <section className="w-full py-12 md:py-24 lg:py-32">
+   <div>
+        <section className="w-full py-12 md:py-24 lg:py-32">
       <div className="container grid gap-6 md:gap-8 px-4 md:px-6 max-w-xl mx-auto lg:max-w-none">
         <div className="flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8">
           <div className="grid gap-1">
@@ -30,23 +23,23 @@ import { Link } from 'react-router-dom';
         </div>
         <div className="grid lg:grid-cols-3 gap-8">
          {
-            AllnftLoader.current ?<Loader/>:
+            PurnftLoader.current ?<Loader/>:
              (
-              nft.current.map((item,index) => (
-                <div className="grid gap-4 relative group border-solid border-1 border-gray-400 w-[300px] rounded  ">
+              purchasenft.current.map((item,index) => (
+                <div className="grid gap-4 relative group w-[300px] rounded border-solid border-1 border-black">
             
             <img
               alt="Apparel"
               className="rounded-lg object-cover w-full aspect-[1/1] group-hover:opacity-50 transition-opacity"
               height="450"
-              src={item.img.current}
-              width="400"
+              src={item.image.current}
+              width="450"
             />
-            <div className="grid gap-1 px-2  pb-5">
+            <div className="grid gap-1 py-2 px-2">
               <h3 className="font-semibold">{item.name.current}</h3>
-              <p className="text-sm leading-none w-fit">{item.discription.current}</p>
-              <p className="text-sm leading-none">{item.price.current}</p>
-              <button onClick={() => purchase_nft(item)} className="bg-black text-white font-bold rounded py-2 w-[150px]  ">purchase</button> 
+              <p className="text-sm leading-none">{item.discription.current}</p>
+              
+              <p>{ethers.utils.formatEther(item.totalprice)}ETH</p>
             </div>
           </div>
             )) 
@@ -58,7 +51,7 @@ import { Link } from 'react-router-dom';
         </div>
       </div>
     </section>
-  </div>
+   </div> 
   )
-  }
+}
 

@@ -1,57 +1,63 @@
 import {
   BrowserRouter,
   Routes,
-  Route
+  Route,
+  Router,
+  Link
 } from "react-router-dom";
 import { Home } from "./Home";
-import marketplace_address from "../contractsData/marketplace-address.json";
-import marketplace_abi from "../contractsData/marketplace.json";
-import nft_address from "../contractsData/nft-address.json";
-import nft_abi from "../contractsData/nft.json";
+import { Component } from "./New";
 import { Create } from "./Create";
 import { ethers } from "ethers";
-import { useState,useEffect } from "react";
+import { useState,useEffect, useContext } from "react";
 import { Allnft } from "./Allnft";
+import { Purchasenft } from "./Purchasenft";
+import {Listednft} from "./Listednft";
+import { nftcontext } from "../context/nftcontext";
+
 
 
 import './App.css';
 
 function App() {
-  const [nft, setnft] = useState({});
-  const [marketplaces, setmarketplaces] = useState({});
+ const {loadlistednft,Listeditem} = useContext(nftcontext)
   useEffect(() => {
-     data()
+    
+     
   }, [])
   
+//handling change in account
+
 //fetching nft contract
- const data = async() => {
-   const provider = new ethers.providers.Web3Provider(window.ethereum);
- const signer = provider.getSigner()
- const nftcontract = new ethers.Contract(nft_address.address, nft_abi.abi, signer);
- setnft(nftcontract)
- console.log(nft)
-//fetching marketplace contract
-const marketplace_contract = new ethers.Contract(marketplace_address.address, marketplace_abi.abi, signer);
-setmarketplaces(marketplace_contract)
-
-//console.log(marketplace_contract)
-console.log(marketplaces);
- //const tokencount = await marketplaces.itemCount();
-//console.log(tokencount.toNumber()) 
-
- }
+ 
 
 
 
 
  
       return (
-        <div className='w-full h-screen '>
-          <Home />
-          <Create nft = {nft} market = {marketplaces} />
-          <Allnft market = {marketplaces} nftdata ={nft}/> 
+        
+        <div >
+          <BrowserRouter>
+          <Routes>
+              <Route path="/" element={<Home/>}/>
+               <Route path="/Create" element={<Create/>}/>
+              <Route path="/Listednft" element={<Listednft  Listeditem={loadlistednft}/>}/>
+              <Route path="/Purchasednft" element={<Purchasenft />}/>
+              <Route path="/Allnft" element={<Allnft />}/>
+              
+              
+
+            
+          </Routes>
+          </BrowserRouter>
+         
         </div>
+
       )
+       
+        
+      
   
 }
 

@@ -20,13 +20,7 @@ const fs = require("fs");
   console.log(count);
    const contractsDir = __dirname + "/../../frontend/contractsData";
    fs.mkdirSync(contractsDir); 
-  const data = {
-    name:"anjali",
-    class:11,
-    college:"csjm"
-  }
-  const jsondata = JSON.stringify(data,undefined,1);
-  console.log(jsondata);
+  
   const nft_artifacts = artifacts.readArtifactSync("NFT");
   const marketplace_artifacts = artifacts.readArtifactSync("Marketplace")
   const N_path = contractsDir + `/nft.json`;
